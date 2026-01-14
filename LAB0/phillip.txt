@@ -1,3 +1,1 @@
-I have Ubuntu 22.04 LTS installed and working correctly.
-I am ready to use Git and GitHub.
-
+pmuvadi
