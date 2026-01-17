@@ -15,7 +15,7 @@ class ModifiedListener(Node):
 
     def callback(self, msg: String):
         s = msg.data
-        s_mod = s + "!"   # REQUIRED: modify the string itself
+        s_mod = s + "!"   # modify the string itself (rubric requirement)
         self.get_logger().info(f'I heard "{s_mod}"')
 
 def main():
