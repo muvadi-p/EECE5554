@@ -11,3 +11,8 @@ LAB0/log/
 
 # Egg-info / packaging artifacts
 **/*.egg-info/
+
+# Top-level colcon artifacts (if colcon was run from repo root)
+build/
+install/
+log/
