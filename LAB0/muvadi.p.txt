@@ -17,7 +17,3 @@ Challenges during installation:
 - Issue: Git accidentally tracked colcon build/install/log artifacts; fixed by updating .gitignore and removing cached artifacts from the repo.
 - Issue: Wi-Fi connectivity on Ubuntu was unstable (connection drops / adapter not recognized at times); workaround was using Ethernet/phone hotspot when needed while troubleshooting drivers/NetworkManager.
 
-Challenges during installation:
-- Issue: Initial ROS 2 pubsub nodes showed "No executable found"; fixed by correcting setup.py entry_points and rebuilding with colcon.
-- Issue: Git accidentally tracked colcon build/install/log artifacts; fixed by updating .gitignore and removing cached artifacts from the repo.
-- Issue: Wi-Fi connectivity on Ubuntu was unstable (connection drops / adapter not recognized at times); workaround was using Ethernet/phone hotspot when needed while troubleshooting drivers/NetworkManager.
