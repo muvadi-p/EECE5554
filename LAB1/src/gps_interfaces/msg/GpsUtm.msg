@@ -1,9 +1,10 @@
 std_msgs/Header header
-
 float64 latitude
 float64 longitude
 float64 altitude
-
-float64 easting
-float64 northing
-string zone
+float64 hdop
+float64 utm_easting
+float64 utm_northing
+string utc
+int32 zone
+string letter
