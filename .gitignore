@@ -15,3 +15,10 @@ LAB0/log/
 build/
 install/
 log/
+
+# ROS2 build artifacts
+LAB1/build/
+LAB1/install/
+LAB1/log/
+**/__pycache__/
+*.pyc
