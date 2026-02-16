@@ -1,24 +1,16 @@
-
-# ROS2 / colcon build artifacts
-LAB0/build/
-LAB0/install/
-LAB0/log/
-
-# Python artifacts
-**/__pycache__/
-**/*.pyc
-
-# Egg-info / packaging artifacts
-**/*.egg-info/
-
-# Top-level colcon artifacts (if colcon was run from repo root)
-build/
-install/
+# colcon / ROS
+**/build/
+**/install/
+**/log/
 log/
 
-# ROS2 build artifacts
-LAB1/build/
-LAB1/install/
-LAB1/log/
-**/__pycache__/
+# Python cache
+__pycache__/
 *.pyc
+
+# local archives
+_archive_local/
+
+# OS junk
+.DS_Store
+Thumbs.db
