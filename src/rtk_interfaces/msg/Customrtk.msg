@@ -9,3 +9,4 @@ string utc
 int32 zone
 string letter
 int32 fix_quality
+string gngga_read

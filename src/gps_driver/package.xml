@@ -2,25 +2,24 @@
 <package format="3">
   <name>gps_driver</name>
   <version>0.0.0</version>
-  <description>GPS driver package for EECE 5554 Lab 1</description>
-  <maintainer email="muvadi.p@northeastern.edu">phillip</maintainer>
-  <license>MIT</license>
+  <description>Message-only package to provide gps_driver/msg/GpsMsg for rosbag deserialization.</description>
+  <maintainer email="phillip@example.com">phillip</maintainer>
+  <license>Apache-2.0</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
-  <buildtool_depend>ament_python</buildtool_depend>
+
+  <build_depend>rosidl_default_generators</build_depend>
+  <exec_depend>rosidl_default_runtime</exec_depend>
 
 
-  <depend>rclpy</depend>
-  <depend>std_msgs</depend>
-  <depend>gps_interfaces</depend>
+  <member_of_group>rosidl_interface_packages</member_of_group>
+  <buildtool_depend>ament_cmake</buildtool_depend>
 
+  <build_depend>rosidl_default_generators</build_depend>
+  <build_depend>std_msgs</build_depend>
 
-  <test_depend>ament_copyright</test_depend>
-  <test_depend>ament_flake8</test_depend>
-  <test_depend>ament_pep257</test_depend>
-  <test_depend>python3-pytest</test_depend>
+  <exec_depend>rosidl_default_runtime</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
 
-  <export>
-    <build_type>ament_python</build_type>
-  </export>
+  <member_of_group>rosidl_interface_packages</member_of_group>
 </package>

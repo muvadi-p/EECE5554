@@ -41,7 +41,7 @@ def nmea_to_decimal(coord_str: str, hemi: str) -> float:
 
 class GPSDriver(Node):
     def __init__(self, port: str, baud: int):
-        super().__init__("gps_driver")
+        super().__init__("rtk_driver")
 
         # Lab topic
         self.pub = self.create_publisher(Customrtk, "/gps_utm", 10)
@@ -110,6 +110,7 @@ class GPSDriver(Node):
 
             # Build message EXACTLY matching gps_interfaces/msg/GpsUtm
             msg = Customrtk()
+            msg.gngga_read = line
 
             msg.header = Header()
             msg.header.stamp = self.get_clock().now().to_msg()

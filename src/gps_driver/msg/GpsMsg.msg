@@ -5,6 +5,6 @@ float64 altitude
 float64 hdop
 float64 utm_easting
 float64 utm_northing
-float64 utc
-string zone
+string utc
+int32 zone
 string letter
