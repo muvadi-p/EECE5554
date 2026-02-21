@@ -1,17 +1,13 @@
-# colcon / ROS
+build/
+install/
+log/
 **/build/
 **/install/
 **/log/
-log/
+*.db3-wal
+*.db3-shm
 
 # Python cache
 __pycache__/
+**/__pycache__/
 *.pyc
-
-# local archives
-_archive_local/
-
-# OS junk
-.DS_Store
-Thumbs.db
-_archive_local_IGNORE/
