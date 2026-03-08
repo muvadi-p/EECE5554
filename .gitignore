@@ -1,13 +1,13 @@
-build/
-install/
-log/
-**/build/
-**/install/
-**/log/
-*.db3-wal
-*.db3-shm
+# Allow LAB3 folder to be tracked
+!LAB3/
+!LAB3/**
 
-# Python cache
-__pycache__/
-**/__pycache__/
-*.pyc
+# Ignore large Lab3 data files
+LAB3/Data/*.mcap
+LAB3/Data/*.db3
+LAB3/Data/**/*.db3
+
+# Ignore build artifacts
+LAB3/build/
+LAB3/install/
+LAB3/log/
