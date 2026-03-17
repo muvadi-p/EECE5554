@@ -7,7 +7,6 @@ import rclpy
 from rclpy.node import Node
 
 from sensor_msgs.msg import Imu, MagneticField
-from std_msgs.msg import Header
 from custom_interfaces.msg import IMUmsg
 
 
@@ -17,7 +16,7 @@ def valid_checksum(line: str) -> bool:
         return False
 
     body = line[1:line.index('*')]
-    given = line[line.index('*') + 1:].upper()
+    given = line[line.index('*') + 1:].strip().upper()
 
     calc = 0
     for ch in body:
@@ -51,14 +50,25 @@ class IMUDriver(Node):
         super().__init__('imu_driver')
 
         self.declare_parameter('port', '/dev/ttyUSB0')
+        self.declare_parameter('frame_id', 'IMU1_Frame')
+
         port = self.get_parameter('port').value
+        self.frame_id = self.get_parameter('frame_id').value
 
         self.get_logger().info(f'Opening serial port: {port}')
         self.ser = serial.Serial(port, 115200, timeout=1.0)
 
-        self.imu_pub = self.create_publisher(Imu, 'imu', 10)
-        self.mag_pub = self.create_publisher(MagneticField, 'magnetic', 10)
-        self.raw_pub = self.create_publisher(IMUmsg, 'imu_raw', 10)
+        # Main publisher for custom message
+        self.pub = self.create_publisher(IMUmsg, 'imu', 10)
+
+        # Optional config command placeholder for 40 Hz output
+        # Verify the exact register command with your VectorNav docs/emulator
+        try:
+            config_cmd = "$VNWRG,07,40*59\r\n"
+            self.ser.write(config_cmd.encode('utf-8'))
+            self.get_logger().info('Sent configuration command for 40 Hz output')
+        except Exception as e:
+            self.get_logger().warn(f'Could not send config command: {e}')
 
         self.timer = self.create_timer(0.001, self.read_serial)
 
@@ -80,11 +90,14 @@ class IMUDriver(Node):
             return
 
         try:
-            body = line[:line.index('*')]
+            body = line[1:line.index('*')]
             fields = body.split(',')
 
             if len(fields) != 13:
                 self.get_logger().warn(f'Unexpected field count: {len(fields)}')
+                return
+
+            if fields[0] != 'VNYMR':
                 return
 
             yaw = float(fields[1])
@@ -109,7 +122,7 @@ class IMUDriver(Node):
 
             imu_msg = Imu()
             imu_msg.header.stamp = stamp
-            imu_msg.header.frame_id = 'IMU1_Frame'
+            imu_msg.header.frame_id = self.frame_id
 
             imu_msg.orientation.x = qx
             imu_msg.orientation.y = qy
@@ -126,22 +139,20 @@ class IMUDriver(Node):
 
             mag_msg = MagneticField()
             mag_msg.header.stamp = stamp
-            mag_msg.header.frame_id = 'IMU1_Frame'
+            mag_msg.header.frame_id = self.frame_id
 
             mag_msg.magnetic_field.x = mag_x
             mag_msg.magnetic_field.y = mag_y
             mag_msg.magnetic_field.z = mag_z
 
-            raw_msg = IMUmsg()
-            raw_msg.header.stamp = stamp
-            raw_msg.header.frame_id = 'IMU1_Frame'
-            raw_msg.imu = imu_msg
-            raw_msg.mag_field = mag_msg
-            raw_msg.raw = line
+            msg = IMUmsg()
+            msg.header.stamp = stamp
+            msg.header.frame_id = self.frame_id
+            msg.imu = imu_msg
+            msg.mag_field = mag_msg
+            msg.raw = line
 
-            self.imu_pub.publish(imu_msg)
-            self.mag_pub.publish(mag_msg)
-            self.raw_pub.publish(raw_msg)
+            self.pub.publish(msg)
 
         except Exception as e:
             self.get_logger().error(f'Parse error: {e}')
@@ -150,9 +161,13 @@ class IMUDriver(Node):
 def main(args=None):
     rclpy.init(args=args)
     node = IMUDriver()
-    rclpy.spin(node)
-    node.destroy_node()
-    rclpy.shutdown()
+    try:
+        rclpy.spin(node)
+    except KeyboardInterrupt:
+        pass
+    finally:
+        node.destroy_node()
+        rclpy.shutdown()
 
 
 if __name__ == '__main__':

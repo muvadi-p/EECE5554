@@ -26,4 +26,4 @@ setup(
             'imu_driver = imu_driver.imu_driver:main',
         ],
     },
-) 
+)

@@ -11,7 +11,7 @@ RATE = 40.0
 gx, gy, gz = [], [], []
 ax, ay, az = [], [], []
 
-with open("stationary_data.csv", "r") as f:
+with open("prof_allan_data.csv", "r") as f:
     reader = csv.DictReader(f)
     for row in reader:
         gx.append(float(row["gyro_x"]))

@@ -5,7 +5,7 @@ import rclpy.serialization
 from rosbag2_py import SequentialReader, StorageOptions, ConverterOptions
 from rosidl_runtime_py.utilities import get_message
 
-bag_dir = str(Path("../Data/stationary_bag").resolve())
+bag_dir = str(Path("../Data/prof_bag").resolve())
 out_csv = "stationary_data.csv"
 
 storage_options = StorageOptions(uri=bag_dir, storage_id="sqlite3")

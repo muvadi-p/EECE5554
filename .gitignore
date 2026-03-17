@@ -11,3 +11,9 @@ LAB3/Data/**/*.db3
 LAB3/build/
 LAB3/install/
 LAB3/log/
+LAB3/Analysis/prof_allan_data.csv
+**/.ipynb_checkpoints/
+**/__pycache__/
+build/
+install/
+log/
